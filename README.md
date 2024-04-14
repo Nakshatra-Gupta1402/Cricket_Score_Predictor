@@ -141,3 +141,60 @@ Here we automates the process of data preprocessing, model building, evaluation,
 
 9. Repeat for ODIs:
    - The same steps are repeated for the dataset related to One Day Internationals (ODIs) with slight modifications in data handling and model building.
+
+MODEL IMPLEMENTATION & WEB APP DEVELOPMENT
+Using Streamlit in python to build a website that takes user input regarding current match, and predict and tell final score using our model with best R-squared score ie XGB.
+Here's a breakdown of what inputs are collected and how they are used in the prediction process:
+
+User Inputs:
+Batting Team: Selection of the team batting.
+Bowling Team: Selection of the team bowling.
+City: Selection of the city where the match is taking place.
+Current Score: Input of the current score of the batting team.
+Overs Done: Number of overs completed in the match.
+Wickets Out: Number of wickets fallen.
+Runs scored in Last 5 Overs: Runs scored by the batting team in the last 5 overs.
+
+Session State:
+	The application uses session_state to persist the match type selection (T20s or ODIs). 	This allows users to switch between these match types without losing their other input 	selections.
+
+Calculations:
+Balls Left: Calculated based on the total overs (either 20 for T20s or 50 for ODIs) minus the overs done, considering the number of balls in an over (6 balls per over).
+Wickets Left: Derived from subtracting the number of wickets out from the total of 10.
+Current Run Rate (CRR): Calculated as the ratio of the current score to the overs completed (current_score / overs).
+
+DataFrame Creation:
+User inputs are organized into a pandas DataFrame (input_df) to match the format expected by the machine learning model.
+This DataFrame includes:
+    batting_team
+    bowling_team
+    city
+    current_score
+    balls_left
+    wickets_left
+    crr
+    last_five
+
+Prediction:
+	Depending on the selected match type (T20s or ODIs), the application uses the 	appropriate pre-trained machine learning model (pipe_t20 or pipe_odi) to predict the 	score.
+	The input DataFrame (input_df) is fed into the selected model (pipe_t20 or pipe_odi) 	to obtain the predicted score.
+
+Displaying Results:
+	The predicted score is then displayed using Streamlit's interface as a header, showing 	the estimated score based on the user's inputs and the trained machine learning model.
+
+
+Here we have predicted the score of India after 38th over of India vs New Zealand ODI W.C. semi-final held in Mumbai.
+And according to our model Predicted Score Came out to be :
+380 Runs
+
+And according to ESPNcricinfo website the predicted score after 38th over was 375 Runs
+
+Where actually India scored 397 runs, so we can say that our model was more close to the actual score than ESPN’s.
+
+
+CONCLUSION & FUTURE SCOPE
+
+Conclusion
+
+Selecting the optimal cricket team significantly impacts its success. This study aims to analyze T20 and ODI cricket data to predict team performance. Three classification algorithms were compared for accuracy using Jupyter and Anaconda navigator. XGBoost emerged as the most dependable classifier, achieving an accuracy rate of 94.3% for T20 and 95.6% for ODI matches.
+
